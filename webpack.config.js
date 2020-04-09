@@ -92,9 +92,6 @@ module.exports = {
             minify: isProd
         }),
     ],
-    resolve: {
-        // extensions: ['js', 'css', 'scss', 'json']
-    },
     optimization: {
         splitChunks: {
             chunks: 'all'
