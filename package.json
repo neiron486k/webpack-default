@@ -12,7 +12,7 @@
   "author": "Alexey Astafev",
   "license": "MIT",
   "browserslist": [
-    "defaults"
+    "> 0.25%, not dead"
   ],
   "devDependencies": {
     "@babel/core": "^7.9.0",
