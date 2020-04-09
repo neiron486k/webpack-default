@@ -1,0 +1,5 @@
+# common
+dist
+node_modules
+# IDE
+.idea
