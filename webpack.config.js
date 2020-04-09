@@ -3,35 +3,49 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CSSNano = require('cssnano')
-const Autoprefixer = require('autoprefixer')
-
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev;
 const getFilename = ext => isProd ? `[name].[hash].${ext}` : `[name].${ext}`
+
 const getLoaders = (extra) => {
     const loaders = [
-        MiniCssExtractPlugin.loader,
+        {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+                hmr: isDev,
+                reloadAll: true
+            }
+        },
         'css-loader',
     ]
-
-    if (isProd) {
-        loaders.push({
-            loader: "postcss-loader",
-            options: {
-                plugins: [
-                    new Autoprefixer,
-                    new CSSNano
-                ]
-            }
-        })
-    }
 
     if (extra) {
         loaders.push(extra)
     }
 
     return loaders
+}
+
+const optimization = () => {
+    const config = {
+        splitChunks: {
+            chunks: 'all'
+        }
+    }
+
+    if (isProd) {
+        config.minimize = true;
+        config.minimizer = [
+            new OptimizeCssAssetsWebpackPlugin(),
+            new TerserPlugin({
+                exclude: /node_modules/
+            })
+        ]
+    }
+
+    return config
 }
 
 module.exports = {
@@ -56,9 +70,9 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
+                        presets: ['@babel/preset-env'],
+                    },
+                },
             },
             {
                 test: '/\.css/',
@@ -70,8 +84,14 @@ module.exports = {
                 exclude: /node-modules/
             },
             {
-                test: /\.(png|jpg)$/,
-                loader: 'file-loader'
+                test: /\.(png|jpe?g|gif)$/i,
+                use: {
+                    loader: "file-loader",
+                    options: {
+                        outputPath: 'images',
+                        name: getFilename('[ext]'),
+                    }
+                }
             }
         ],
     },
@@ -80,6 +100,7 @@ module.exports = {
         overlay: true,
         port: 3000
     },
+    devtool: isDev ? 'source-map' : '',
     plugins: [
         new CleanWebpackPlugin(),
         new VueLoaderPlugin(),
@@ -92,9 +113,5 @@ module.exports = {
             minify: isProd
         }),
     ],
-    optimization: {
-        splitChunks: {
-            chunks: 'all'
-        }
-    }
+    optimization: optimization()
 };
