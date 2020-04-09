@@ -63,7 +63,7 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
-                exclude: /node-mudules/
+                exclude: /node_modules/
             },
             {
                 test: /\.js/,
@@ -73,6 +73,7 @@ module.exports = {
                         presets: ['@babel/preset-env'],
                     },
                 },
+                exclude: /node_modules/
             },
             {
                 test: '/\.css/',
