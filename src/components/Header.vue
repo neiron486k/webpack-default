@@ -19,7 +19,7 @@
         top: 0;
         background: rgba(0, 0, 0, .4);
         width: 100%;
-        color: white;
+        color: #fff;
         font-weight: bold;
         text-align: left;
         padding: 16px;

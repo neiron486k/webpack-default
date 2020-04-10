@@ -5,7 +5,8 @@ export default {
     namespaced: true,
     state: {
         message: 'police',
-        image: police
+        image: police,
+        title: 'example title'
     },
     mutations: {
         reverseMessage: (state) => {
@@ -15,6 +16,7 @@ export default {
     },
     getters: {
         message: state => state.message,
-        image: state => state.image
+        image: state => state.image,
+        getTitle: state => state.title
     }
 }

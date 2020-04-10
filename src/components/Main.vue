@@ -11,24 +11,29 @@
 
     export default {
         name: "Main",
-        computed: mapGetters({
-            message: 'main/message',
-            image: 'main/image'
-        }),
-        methods: mapMutations({
-            reverseMessage: 'main/reverseMessage'
-        })
+        computed: {
+            ...mapGetters({
+                message: 'main/message',
+                image: 'main/image',
+                title: 'main/getTitle'
+            }),
+        },
+        methods:{
+            ...mapMutations({
+                reverseMessage: 'main/reverseMessage'
+            })
+        }
+
     }
 
 </script>
 
 <style scoped lang="scss">
     .container {
-        overflow: hidden;
-        height: 100vh;
+        height: 100%;
         display: flex;
         align-items: center;
-        cursor: pointer;;
+        cursor: pointer;
     }
 
     .text {
