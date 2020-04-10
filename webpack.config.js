@@ -118,5 +118,8 @@ module.exports = {
             minify: isProd
         }),
     ],
-    optimization: optimization()
+    optimization: optimization(),
+    resolve: {
+        extensions: ['*', '.js', '.vue', '.json']
+    }
 };

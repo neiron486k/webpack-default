@@ -1,17 +1,25 @@
 <template>
-    <div class="container" @click="reverseMessage" :style="{background: `url(${image}) no-repeat center / cover`}">
-        <div class="text">
-            {{ message }}
-        </div>
+    <div class="root">
+        <Header />
+        <Main />
     </div>
 </template>
 
 <script>
     import "./scss/app.scss"
-    import { mapGetters, mapMutations } from 'vuex'
+    import Header from "./components/Header";
+    import Main from "./components/Main";
 
     export default {
-        methods: mapMutations(['reverseMessage']),
-        computed: mapGetters(['message', 'image'])
+        components: {
+            Header,
+            Main
+        },
     }
 </script>
+<style scoped lang="scss">
+    .root {
+        position: relative;
+        overflow: hidden;
+    }
+</style>

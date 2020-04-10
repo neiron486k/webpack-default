@@ -1,0 +1,6 @@
+export default {
+    mutations: {
+    },
+    getters: {
+    }
+}
